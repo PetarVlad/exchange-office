@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * @property string $iso
+ * @property int $id
  * @property int $currency_id
  * @property float $purchased_amount
  * @property float $exchange_rate
@@ -22,6 +22,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Order extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'currency_id',
+        'purchased_amount',
+        'exchange_rate',
+        'paid_amount',
+        'surcharge_percentage',
+        'surcharge_amount',
+        'discount_percentage',
+        'discount_amount',
+    ];
 
     public function currency(): BelongsTo
     {
