@@ -31,6 +31,20 @@ class AppServiceProvider extends ServiceProvider
                 $app->make(Pipeline::class)
             );
         });
+
+        $this->app->bind(ClientInterface::class, function () {
+            return new Client(
+                [
+                    'default_currency' => config('currencies.default'),
+                    ...config('integrations.currencylayer'),
+                ]);
+        });
+
+        $this->app->bind(UpdateService::class, function (Application $app) {
+            return new UpdateService($app->make(ClientInterface::class));
+        });
+
+        $this->app->bind(UpdateServiceInterface::class, UpdateService::class);
     }
 
     /**
