@@ -27,11 +27,12 @@ class ExchangeCalculatorTest extends TestCase
         );
         $currency = $input['currency']();
         $currencyExchangeResult = $currencyExchangeCalculator($currency, $input['purchased_amount']);
-        $this->assertEquals($currency->exchange_rate, $currencyExchangeResult->exchange_rate);
+        $this->assertEquals($expected['purchased_amount'], $currencyExchangeResult->purchased_amount);
+        $this->assertEquals($expected['exchange_rate'], $currencyExchangeResult->exchange_rate);
         $this->assertEquals($expected['paid_amount'], $currencyExchangeResult->paid_amount);
-        $this->assertEquals($currency->surcharge_percentage, $currencyExchangeResult->surcharge_percentage);
+        $this->assertEquals($expected['surcharge_percentage'], $currencyExchangeResult->surcharge_percentage);
         $this->assertEquals($expected['surcharge_amount'], $currencyExchangeResult->surcharge_amount);
-        $this->assertEquals($currency->discount_percentage, $currencyExchangeResult->discount_percentage);
+        $this->assertEquals($expected['discount_percentage'], $currencyExchangeResult->discount_percentage);
         $this->assertEquals($expected['discount_amount'], $currencyExchangeResult->discount_amount);
     }
 
@@ -51,8 +52,12 @@ class ExchangeCalculatorTest extends TestCase
                     'purchased_amount' => 10000,
                 ],
                 [
+                    'purchased_amount' => 10000,
+                    'exchange_rate' => 100,
                     'paid_amount' => 100,
+                    'surcharge_percentage' => 0,
                     'surcharge_amount' => 0,
+                    'discount_percentage' => 0,
                     'discount_amount' => 0,
                 ],
             ],
@@ -69,8 +74,12 @@ class ExchangeCalculatorTest extends TestCase
                     'purchased_amount' => 10000,
                 ],
                 [
+                    'purchased_amount' => 10000,
+                    'exchange_rate' => 100,
                     'paid_amount' => 105,
+                    'surcharge_percentage' => 5,
                     'surcharge_amount' => 5,
+                    'discount_percentage' => 0,
                     'discount_amount' => 0,
                 ],
             ],
@@ -87,8 +96,12 @@ class ExchangeCalculatorTest extends TestCase
                     'purchased_amount' => 10000,
                 ],
                 [
+                    'purchased_amount' => 10000,
+                    'exchange_rate' => 100,
                     'paid_amount' => 95,
+                    'surcharge_percentage' => 0,
                     'surcharge_amount' => 0,
+                    'discount_percentage' => 5,
                     'discount_amount' => 5,
                 ],
             ],
@@ -105,8 +118,12 @@ class ExchangeCalculatorTest extends TestCase
                     'purchased_amount' => 10000,
                 ],
                 [
+                    'purchased_amount' => 10000,
+                    'exchange_rate' => 100,
                     'paid_amount' => 102.9,
+                    'surcharge_percentage' => 5,
                     'surcharge_amount' => 5,
+                    'discount_percentage' => 2,
                     'discount_amount' => 2.1,
                 ],
             ],

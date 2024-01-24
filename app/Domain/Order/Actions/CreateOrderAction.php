@@ -9,13 +9,17 @@ use App\Domain\Order\Models\Order;
 
 class CreateOrderAction
 {
+    public function __construct(public ExchangeCalculator $exchangeCalculator){
+    }
+
     public function __invoke(OrderRequestDto $orderRequestDto): Order
     {
         $currency = Currency::where('iso', $orderRequestDto->currency_iso)->first();
-        $currencyExchangeResult = app(ExchangeCalculator::class)($currency, $orderRequestDto->purchased_amount);
+        $currencyExchangeResult = $this->exchangeCalculator($currency, $orderRequestDto->purchased_amount);
 
         return Order::create([
             'currency_id' => $currency->id,
+            'purchased_amount' => $currencyExchangeResult->purchased_amount,
             'exchange_rate' => $currencyExchangeResult->exchange_rate,
             'paid_amount' => $currencyExchangeResult->paid_amount,
             'surcharge_percentage' => $currencyExchangeResult->surcharge_percentage,
@@ -24,4 +28,5 @@ class CreateOrderAction
             'discount_amount' => $currencyExchangeResult->discount_amount,
         ]);
     }
+
 }

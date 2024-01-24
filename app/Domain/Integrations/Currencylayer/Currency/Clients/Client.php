@@ -48,7 +48,6 @@ class Client implements ClientInterface
         try {
             $response = Http::get($this->hostUrl.'live', [
                 'access_key' => $this->accessKey,
-                //TODO: Replace USD with config default currency
                 'source' => $this->defaultCurrency,
                 ...$params
             ]);
