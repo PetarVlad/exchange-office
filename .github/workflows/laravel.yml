@@ -32,6 +32,7 @@ jobs:
       env:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
+        NOTIFICATIONS_RECIPIENT: test@example.com
       run: vendor/bin/phpunit
     - name: Run Pint
       run: vendor/bin/pint --test

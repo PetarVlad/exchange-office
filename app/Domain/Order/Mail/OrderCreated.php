@@ -14,10 +14,13 @@ class OrderCreated extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    private string $defaultCurrency;
+    public string $defaultCurrency;
+
+    public string $appName;
 
     public function __construct(public readonly Order $order){
         $this->defaultCurrency = config('currencies.default');
+        $this->appName = config('app.name');
     }
 
     public function envelope(): Envelope
