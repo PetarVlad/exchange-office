@@ -15,8 +15,8 @@ class OrderResourceController extends Controller
         $validated = $orderRequest->safe()->all();
 
         $order = $createOrderAction(new OrderRequestDto(
-            currency_iso: $validated['currency_iso'],
-            purchased_amount: $validated['purchased_amount']
+            currencyIso: $validated['currency_iso'],
+            purchasedAmount: $validated['purchased_amount']
         ));
 
         return new OrderResource($order);

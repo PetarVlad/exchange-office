@@ -9,9 +9,9 @@ class DiscountPipe
 {
     public function handle(ExchangeResult $currencyExchangeResult, Closure $next): ExchangeResult
     {
-        $currencyExchangeResult->discount_percentage = $currencyExchangeResult->currency->discount_percentage;
-        $currencyExchangeResult->discount_amount = round($currencyExchangeResult->paid_amount * $currencyExchangeResult->discount_percentage / 100, 2);
-        $currencyExchangeResult->paid_amount -= $currencyExchangeResult->discount_amount;
+        $currencyExchangeResult->discountPercentage = $currencyExchangeResult->currency->discount_percentage;
+        $currencyExchangeResult->discountAmount = round($currencyExchangeResult->paidAmount * $currencyExchangeResult->discountPercentage / 100, 2);
+        $currencyExchangeResult->paidAmount -= $currencyExchangeResult->discountAmount;
 
         return $next($currencyExchangeResult);
     }

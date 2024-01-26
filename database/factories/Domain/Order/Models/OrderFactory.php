@@ -22,7 +22,6 @@ class OrderFactory extends Factory
         ];
     }
 
-    //TODO: Implement currency exchange calc
     public function calculated()
     {
         return $this->state([])->afterMaking(function (Order $order) {

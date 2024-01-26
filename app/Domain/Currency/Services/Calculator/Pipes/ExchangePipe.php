@@ -9,9 +9,9 @@ class ExchangePipe
 {
     public function handle(ExchangeResult $currencyExchangeResult, Closure $next): ExchangeResult
     {
-        $currencyExchangeResult->exchange_rate = $currencyExchangeResult->currency->exchange_rate;
-        $currencyExchangeResult->converted_amount = round($currencyExchangeResult->purchased_amount / $currencyExchangeResult->exchange_rate, 2);
-        $currencyExchangeResult->paid_amount = $currencyExchangeResult->converted_amount;
+        $currencyExchangeResult->exchangeRate = $currencyExchangeResult->currency->exchange_rate;
+        $currencyExchangeResult->convertedAmount = round($currencyExchangeResult->purchasedAmount / $currencyExchangeResult->exchangeRate, 2);
+        $currencyExchangeResult->paidAmount = $currencyExchangeResult->convertedAmount;
 
         return $next($currencyExchangeResult);
     }

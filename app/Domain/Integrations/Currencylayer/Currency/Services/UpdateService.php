@@ -23,7 +23,7 @@ class UpdateService implements UpdateServiceInterface
     {
         try {
             $liveData = $this->client->getAllExisting()->mapWithKeys(function (QuoteDTO $quote) {
-                return [$quote->currency_iso => $quote->exchange_rate];
+                return [$quote->currencyIso => $quote->exchangeRate];
             })->all();
             $currencies = Currency::all();
 

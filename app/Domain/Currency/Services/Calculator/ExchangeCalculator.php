@@ -13,7 +13,7 @@ class ExchangeCalculator
 
     public function __invoke(Currency $currency, float $purchased_amount): ExchangeResult
     {
-        $currencyExchangeResult = new ExchangeResult(currency: $currency, purchased_amount: $purchased_amount);
+        $currencyExchangeResult = new ExchangeResult(currency: $currency, purchasedAmount: $purchased_amount);
 
         return $this->pipeline->send($currencyExchangeResult)
             ->through($this->pipes)

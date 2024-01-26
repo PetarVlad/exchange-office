@@ -9,9 +9,9 @@ class SurchargePipe
 {
     public function handle(ExchangeResult $currencyExchangeResult, Closure $next): ExchangeResult
     {
-        $currencyExchangeResult->surcharge_percentage = $currencyExchangeResult->currency->surcharge_percentage;
-        $currencyExchangeResult->surcharge_amount = round($currencyExchangeResult->converted_amount * $currencyExchangeResult->surcharge_percentage / 100, 2);
-        $currencyExchangeResult->paid_amount += $currencyExchangeResult->surcharge_amount;
+        $currencyExchangeResult->surchargePercentage = $currencyExchangeResult->currency->surcharge_percentage;
+        $currencyExchangeResult->surchargeAmount = round($currencyExchangeResult->convertedAmount * $currencyExchangeResult->surchargePercentage / 100, 2);
+        $currencyExchangeResult->paidAmount += $currencyExchangeResult->surchargeAmount;
 
         return $next($currencyExchangeResult);
     }

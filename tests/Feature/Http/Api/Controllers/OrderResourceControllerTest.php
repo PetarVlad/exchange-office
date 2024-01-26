@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Api\Controllers;
 
+use App\Domain\Currency\Models\Currency;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
@@ -24,10 +25,11 @@ class OrderResourceControllerTest extends TestCase
     /**
      * @dataProvider provideTestValidationsData
      */
-    //TODO: replace seed with custom factory data
     public function testStoreValidations($body, $errors)
     {
-        $this->seed();
+        Currency::factory()->create([
+            'iso' => 'XYZ',
+        ]);
         $response = $this->postJson($this->endpointBase, $body);
 
         $response->assertInvalid($errors);
@@ -69,7 +71,7 @@ class OrderResourceControllerTest extends TestCase
             //Case 4: Purchased amount is not a numeric
             [
                 [
-                    'currency_iso' => 'GBP',
+                    'currency_iso' => 'XYZ',
                     'purchased_amount' => 'ABC',
                 ],
                 [
@@ -81,7 +83,7 @@ class OrderResourceControllerTest extends TestCase
             //Case 5: Purchased amount is less than 0
             [
                 [
-                    'currency_iso' => 'GBP',
+                    'currency_iso' => 'XYZ',
                     'purchased_amount' => -1,
                 ],
                 [
@@ -93,7 +95,7 @@ class OrderResourceControllerTest extends TestCase
             //Case 6: Purchased amount has more than 6 whole digits
             [
                 [
-                    'currency_iso' => 'GBP',
+                    'currency_iso' => 'XYZ',
                     'purchased_amount' => 1000000,
                 ],
                 [
@@ -105,7 +107,7 @@ class OrderResourceControllerTest extends TestCase
             //Case 7: Purchased amount has more than 2 decimals
             [
                 [
-                    'currency_iso' => 'GBP',
+                    'currency_iso' => 'XYZ',
                     'purchased_amount' => 123.456,
                 ],
                 [
@@ -119,9 +121,11 @@ class OrderResourceControllerTest extends TestCase
 
     public function testStoreOrderSuccessful()
     {
-        $this->seed();
+        Currency::factory()->create([
+            'iso' => 'XYZ',
+        ]);
         $response = $this->postJson($this->endpointBase, [
-            'currency_iso' => 'GBP',
+            'currency_iso' => 'XYZ',
             'purchased_amount' => 123.45,
         ]);
 

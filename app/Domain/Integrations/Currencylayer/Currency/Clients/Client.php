@@ -29,7 +29,6 @@ class Client implements ClientInterface
         $this->defaultCurrency = $config['default_currency'];
     }
 
-    //TODO: Place in separate class or use validator?
     private function validateConfig(array $config): void
     {
         Assert::notEmpty($config['host_url'] ?? '', 'Config param integrations.currencylayer.host_url must be set');
@@ -68,7 +67,6 @@ class Client implements ClientInterface
     /**
      * @throws ClientException
      */
-    //TODO: Place in separate class or use validator?
     private function validateResponse($response): void
     {
         if (empty($response['success'])
@@ -95,10 +93,30 @@ class Client implements ClientInterface
     {
         return collect(
             array_map(
-                function ($currency, $exchange_rate) {
-                    return new QuoteDTO(str_replace($this->defaultCurrency, '', $currency), $exchange_rate);
+                function ($currencyString, $exchangeRate) {
+                    $currencyIso = strtoupper(
+                        str_replace($this->defaultCurrency, '', $currencyString)
+                    );
+                    $this->validateQuote($currencyIso, $exchangeRate);
+
+                    return new QuoteDTO(
+                        $currencyIso,
+                        $exchangeRate
+                    );
                 }, array_keys($quotes), $quotes
             )
         );
+    }
+
+    private function validateQuote(string $currencyIso, $exchangeRate): void
+    {
+        if (preg_match('/^[A-Z]{3}$/', $currencyIso)) {
+            throw new InvalidArgumentException('Currency provided to is not in a valid format: '.$currencyIso);
+        }
+
+        // Check if $this->$exchange_rate is a float with 2 decimals
+        if (preg_match('/^\d{1,6}(\.\d{1,2})?$/', $exchangeRate)) {
+            throw new InvalidArgumentException('Exchange rate provided is not in a valid format: '.$exchangeRate);
+        }
     }
 }

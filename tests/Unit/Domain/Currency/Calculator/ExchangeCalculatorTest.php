@@ -17,23 +17,23 @@ class ExchangeCalculatorTest extends TestCase
      */
     public function testCalculations(array $input, array $expected)
     {
-        //TODO: Check for better dependency injection
-        $currencyExchangeCalculator = new ExchangeCalculator([
-            ExchangePipe::class,
-            SurchargePipe::class,
-            DiscountPipe::class,
-        ],
+        $currencyExchangeCalculator = new ExchangeCalculator(
+            [
+                ExchangePipe::class,
+                SurchargePipe::class,
+                DiscountPipe::class,
+            ],
             $this->app->make(Pipeline::class)
         );
         $currency = $input['currency']();
         $currencyExchangeResult = $currencyExchangeCalculator($currency, $input['purchased_amount']);
-        $this->assertEquals($expected['purchased_amount'], $currencyExchangeResult->purchased_amount);
-        $this->assertEquals($expected['exchange_rate'], $currencyExchangeResult->exchange_rate);
-        $this->assertEquals($expected['paid_amount'], $currencyExchangeResult->paid_amount);
-        $this->assertEquals($expected['surcharge_percentage'], $currencyExchangeResult->surcharge_percentage);
-        $this->assertEquals($expected['surcharge_amount'], $currencyExchangeResult->surcharge_amount);
-        $this->assertEquals($expected['discount_percentage'], $currencyExchangeResult->discount_percentage);
-        $this->assertEquals($expected['discount_amount'], $currencyExchangeResult->discount_amount);
+        $this->assertEquals($expected['purchased_amount'], $currencyExchangeResult->purchasedAmount);
+        $this->assertEquals($expected['exchange_rate'], $currencyExchangeResult->exchangeRate);
+        $this->assertEquals($expected['paid_amount'], $currencyExchangeResult->paidAmount);
+        $this->assertEquals($expected['surcharge_percentage'], $currencyExchangeResult->surchargePercentage);
+        $this->assertEquals($expected['surcharge_amount'], $currencyExchangeResult->surchargeAmount);
+        $this->assertEquals($expected['discount_percentage'], $currencyExchangeResult->discountPercentage);
+        $this->assertEquals($expected['discount_amount'], $currencyExchangeResult->discountAmount);
     }
 
     public static function provideTestCalculationsData(): array

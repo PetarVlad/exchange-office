@@ -15,18 +15,18 @@ class CreateOrderAction
 
     public function __invoke(OrderRequestDto $orderRequestDto): Order
     {
-        $currency = Currency::where('iso', $orderRequestDto->currency_iso)->first();
-        $currencyExchangeResult = ($this->exchangeCalculator)($currency, $orderRequestDto->purchased_amount);
+        $currency = Currency::where('iso', $orderRequestDto->currencyIso)->first();
+        $currencyExchangeResult = ($this->exchangeCalculator)($currency, $orderRequestDto->purchasedAmount);
 
         return Order::create([
             'currency_id' => $currency->id,
-            'purchased_amount' => $currencyExchangeResult->purchased_amount,
-            'exchange_rate' => $currencyExchangeResult->exchange_rate,
-            'paid_amount' => $currencyExchangeResult->paid_amount,
-            'surcharge_percentage' => $currencyExchangeResult->surcharge_percentage,
-            'surcharge_amount' => $currencyExchangeResult->surcharge_amount,
-            'discount_percentage' => $currencyExchangeResult->discount_percentage,
-            'discount_amount' => $currencyExchangeResult->discount_amount,
+            'purchased_amount' => $currencyExchangeResult->purchasedAmount,
+            'exchange_rate' => $currencyExchangeResult->exchangeRate,
+            'paid_amount' => $currencyExchangeResult->paidAmount,
+            'surcharge_percentage' => $currencyExchangeResult->surchargePercentage,
+            'surcharge_amount' => $currencyExchangeResult->surchargeAmount,
+            'discount_percentage' => $currencyExchangeResult->discountPercentage,
+            'discount_amount' => $currencyExchangeResult->discountAmount,
         ]);
     }
 }
