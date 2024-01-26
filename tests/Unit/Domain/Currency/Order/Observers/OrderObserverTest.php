@@ -19,7 +19,9 @@ class OrderObserverTest extends TestCase
 
         $defaultCurrency = Config::get('notifications.order.currency_iso');
         Config::set('notifications.order.currency_iso', ['XYZ']);
-        $order = Order::factory()->make();
+        $order = Order::factory()->make([
+            'currency_id' => null
+        ]);
         $order->currency = Currency::factory()->make([
             'iso' => 'XYZ'
         ]);
@@ -37,7 +39,9 @@ class OrderObserverTest extends TestCase
 
         $defaultCurrency = Config::get('notifications.order.currency_iso');
         Config::set('notifications.order.currency_iso', ['XYZ']);
-        $order = Order::factory()->make();
+        $order = Order::factory()->make([
+            'currency_id' => null
+        ]);
         $order->currency = Currency::factory()->make([
             'iso' => 'ABC'
         ]);
