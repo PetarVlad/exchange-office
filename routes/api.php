@@ -20,5 +20,5 @@ Route::resource('orders', OrderResourceController::class)->only([
 ]);
 
 Route::resource('currencies', CurrencyResourceController::class)->only([
-    'index'
+    'index',
 ]);

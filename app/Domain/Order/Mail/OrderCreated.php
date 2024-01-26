@@ -18,7 +18,8 @@ class OrderCreated extends Mailable implements ShouldQueue
 
     public string $appName;
 
-    public function __construct(public readonly Order $order){
+    public function __construct(public readonly Order $order)
+    {
         $this->defaultCurrency = config('currencies.default');
         $this->appName = config('app.name');
     }

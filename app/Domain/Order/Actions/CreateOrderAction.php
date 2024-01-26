@@ -9,7 +9,8 @@ use App\Domain\Order\Models\Order;
 
 class CreateOrderAction
 {
-    public function __construct(public ExchangeCalculator $exchangeCalculator){
+    public function __construct(public ExchangeCalculator $exchangeCalculator)
+    {
     }
 
     public function __invoke(OrderRequestDto $orderRequestDto): Order
@@ -28,5 +29,4 @@ class CreateOrderAction
             'discount_amount' => $currencyExchangeResult->discount_amount,
         ]);
     }
-
 }

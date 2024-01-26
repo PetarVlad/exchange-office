@@ -12,7 +12,6 @@ use Tests\TestCase;
 
 class OrderObserverTest extends TestCase
 {
-
     public function testAfterCreatedMailSent(): void
     {
         Mail::fake();
@@ -20,14 +19,14 @@ class OrderObserverTest extends TestCase
         $defaultCurrency = Config::get('notifications.order.currency_iso');
         Config::set('notifications.order.currency_iso', ['XYZ']);
         $order = Order::factory()->make([
-            'currency_id' => null
+            'currency_id' => null,
         ]);
         $order->currency = Currency::factory()->make([
-            'iso' => 'XYZ'
+            'iso' => 'XYZ',
         ]);
         $orderObserver = new OrderObserver();
         $orderObserver->created($order);
-        Mail::assertQueued(OrderCreated::class, function(OrderCreated $mail) use ($order) {
+        Mail::assertQueued(OrderCreated::class, function (OrderCreated $mail) use ($order) {
             return $mail->order->currency->iso === $order->currency->iso;
         });
         Config::set('notifications.order.currency_iso', $defaultCurrency);
@@ -40,10 +39,10 @@ class OrderObserverTest extends TestCase
         $defaultCurrency = Config::get('notifications.order.currency_iso');
         Config::set('notifications.order.currency_iso', ['XYZ']);
         $order = Order::factory()->make([
-            'currency_id' => null
+            'currency_id' => null,
         ]);
         $order->currency = Currency::factory()->make([
-            'iso' => 'ABC'
+            'iso' => 'ABC',
         ]);
         $orderObserver = new OrderObserver();
         $orderObserver->created($order);

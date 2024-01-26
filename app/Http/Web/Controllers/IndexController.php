@@ -10,7 +10,7 @@ class IndexController extends Controller
     public function index(): View
     {
         return view('index', [
-            'defaultCurrency' => config('currencies.default')
+            'defaultCurrency' => config('currencies.default'),
         ]);
     }
 }

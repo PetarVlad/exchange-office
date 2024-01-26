@@ -14,10 +14,10 @@ use Tests\TestCase;
 
 class UpdateServiceTest extends TestCase
 {
-
     use RefreshDatabase, WithFaker;
 
-    public function testClientException(){
+    public function testClientException()
+    {
         $this->mock(ClientInterface::class)->shouldReceive('getAllExisting')->andThrow(new ClientException('Test exception'));
         $updateService = app(UpdateService::class);
         $this->expectException(UpdateServiceException::class);
@@ -25,7 +25,8 @@ class UpdateServiceTest extends TestCase
         $updateService->updateAll();
     }
 
-    public function testUpdateServiceException(){
+    public function testUpdateServiceException()
+    {
         $this->mock(ClientInterface::class)->shouldReceive('getAllExisting')->andThrow(new UpdateServiceException('Test exception'));
         $updateService = app(UpdateService::class);
         $this->expectException(UpdateServiceException::class);
@@ -44,7 +45,7 @@ class UpdateServiceTest extends TestCase
             ];
         })->toArray();
         $orderDtoArray = [];
-        foreach($expected as $currency){
+        foreach ($expected as $currency) {
             $orderDtoArray[] = new QuoteDto(
                 $currency['iso'],
                 $currency['exchange_rate']
@@ -54,7 +55,7 @@ class UpdateServiceTest extends TestCase
         $this->mock(ClientInterface::class)->shouldReceive('getAllExisting')->andReturn($quoteDtoCollection);
         $updateService = app(UpdateService::class);
         $updateService->updateAll();
-        foreach($expected as $currency){
+        foreach ($expected as $currency) {
             $this->assertDatabaseHas('currencies', $currency);
         }
     }

@@ -33,7 +33,7 @@ class Client implements ClientInterface
     private function validateConfig(array $config): void
     {
         Assert::notEmpty($config['host_url'] ?? '', 'Config param integrations.currencylayer.host_url must be set');
-        if(filter_var($config['host_url'], FILTER_VALIDATE_URL) === false){
+        if (filter_var($config['host_url'], FILTER_VALIDATE_URL) === false) {
             throw new InvalidArgumentException('Config param integrations.currencylayer.host_url must be a valid url');
         }
         Assert::notEmpty($config['access_key'] ?? '', 'Config param integrations.currencylayer.access_key must be set');
@@ -49,7 +49,7 @@ class Client implements ClientInterface
             $response = Http::get($this->hostUrl.'live', [
                 'access_key' => $this->accessKey,
                 'source' => $this->defaultCurrency,
-                ...$params
+                ...$params,
             ]);
 
             $response->throw();
@@ -61,6 +61,7 @@ class Client implements ClientInterface
             );
         }
         $this->validateResponse($response);
+
         return $this->quoteArrayToQuoteDtoCollection($response['quotes']);
     }
 
@@ -70,9 +71,9 @@ class Client implements ClientInterface
     //TODO: Place in separate class or use validator?
     private function validateResponse($response): void
     {
-        if(empty($response['success'])
+        if (empty($response['success'])
             || empty($response['quotes'])
-            || $response['success'] !== true){
+            || $response['success'] !== true) {
             throw new ClientException(
                 $response['error']['info'] ?? 'Malformed response object recieved',
                 $response['error']['code'] ?? 0
@@ -86,7 +87,7 @@ class Client implements ClientInterface
     public function getAllExisting(): Collection
     {
         return $this->getAll([
-            'currencies' => implode(',', Currency::pluck('iso')->all())
+            'currencies' => implode(',', Currency::pluck('iso')->all()),
         ]);
     }
 

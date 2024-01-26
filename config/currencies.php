@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'default' => env('DEFAULT_CURRENCY_ISO', 'USD')
+    'default' => env('DEFAULT_CURRENCY_ISO', 'USD'),
 ];

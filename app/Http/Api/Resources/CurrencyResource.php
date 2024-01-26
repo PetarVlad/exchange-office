@@ -14,7 +14,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
  */
 class CurrencyResource extends JsonResource
 {
-
     public function toArray(Request $request): array
     {
         return [
@@ -22,7 +21,7 @@ class CurrencyResource extends JsonResource
             'iso' => $this->iso,
             'exchange_rate' => $this->exchange_rate,
             'surcharge_percentage' => $this->surcharge_percentage,
-            'discount_percentage' => $this->discount_percentage
+            'discount_percentage' => $this->discount_percentage,
         ];
     }
 }

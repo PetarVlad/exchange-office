@@ -28,7 +28,7 @@ class CurrencyUpdateCommand extends Command
             $updateService->updateAll();
             $this->info('Update completed successfuly!');
         } catch (Exception $e) {
-            $this->error('An error occurred while trying to update currencies: ' . $e->getMessage());
+            $this->error('An error occurred while trying to update currencies: '.$e->getMessage());
         }
     }
 }

@@ -24,13 +24,15 @@ class ClientTest extends TestCase
         $this->config = [
             'default_currency' => 'XYZ',
             'host_url' => 'http://localhost/',
-            'access_key' => 'ABCD1234'
+            'access_key' => 'ABCD1234',
         ];
     }
+
     /**
      * @dataProvider provideTestConfigData
      */
-    public function testConfig(string $exceptionClass, $exceptionMessage, $config){
+    public function testConfig(string $exceptionClass, $exceptionMessage, $config)
+    {
         $this->expectException($exceptionClass);
         $this->expectExceptionMessage($exceptionMessage);
         new Client($config);
@@ -42,29 +44,30 @@ class ClientTest extends TestCase
             [
                 InvalidArgumentException::class,
                 'Config param integrations.currencylayer.host_url must be set',
-                []
+                [],
             ],
             [
                 InvalidArgumentException::class,
                 'Config param integrations.currencylayer.host_url must be a valid url',
-                ['host_url' => 'ABC']
+                ['host_url' => 'ABC'],
             ],
             [
                 InvalidArgumentException::class,
                 'Config param integrations.currencylayer.access_key must be set',
-                ['host_url' => 'http://localhost/']
+                ['host_url' => 'http://localhost/'],
             ],
             [
                 InvalidArgumentException::class,
                 'Config param currencies.default must be set',
-                ['host_url' => 'http://localhost/', 'access_key' => 'ABCD1234']
+                ['host_url' => 'http://localhost/', 'access_key' => 'ABCD1234'],
             ],
         ];
     }
 
-    public function testErrorResponse(){
+    public function testErrorResponse()
+    {
         Http::fake([
-            $this->config['host_url'].'live*' => Http::response(null, 500)
+            $this->config['host_url'].'live*' => Http::response(null, 500),
         ]);
         $this->expectException(ClientException::class);
         $this->expectExceptionCode(500);
@@ -76,9 +79,10 @@ class ClientTest extends TestCase
     /**
      * @dataProvider provideMalformedResponseData
      */
-    public function testMalformedResponse(array $response){
+    public function testMalformedResponse(array $response)
+    {
         Http::fake([
-            $this->config['host_url'].'live*' => Http::response($response)
+            $this->config['host_url'].'live*' => Http::response($response),
         ]);
         $this->expectException(ClientException::class);
         $this->expectExceptionMessage('Malformed response object recieved');
@@ -90,85 +94,86 @@ class ClientTest extends TestCase
     {
         return [
             [
-                []
+                [],
             ],
             [
                 [
-                    'success' => false
-                ]
-            ],
-            [
-                [
-                    'success' => true
-                ]
+                    'success' => false,
+                ],
             ],
             [
                 [
                     'success' => true,
-                    'quotes' => []
-                ]
+                ],
+            ],
+            [
+                [
+                    'success' => true,
+                    'quotes' => [],
+                ],
             ],
         ];
     }
 
-    public function testSuccessResponseGetAll(){
+    public function testSuccessResponseGetAll()
+    {
         $defaultCurrency = $this->config['default_currency'];
         $expected = [
-            "ABC" => 1.234567,
-            "BCD" => 2.345678,
-            "DEF" => 3.456789,
-            "EFG" => 4.567890,
-            "GHK" => 5.678901
+            'ABC' => 1.234567,
+            'BCD' => 2.345678,
+            'DEF' => 3.456789,
+            'EFG' => 4.567890,
+            'GHK' => 5.678901,
         ];
         $quotes = [];
-        foreach($expected as $currencyIso => $exchangeRate){
+        foreach ($expected as $currencyIso => $exchangeRate) {
             $quotes[$defaultCurrency.$currencyIso] = $exchangeRate;
         }
         Http::fake([
             $this->config['host_url'].'live*' => Http::response([
-                  "success" => true,
-                  "terms" => "https://currencylayer.com/terms",
-                  "privacy" => "https://currencylayer.com/privacy",
-                  "timestamp" => time(),
-                  "source" => $defaultCurrency,
-                  "quotes" => $quotes
-            ])
+                'success' => true,
+                'terms' => 'https://currencylayer.com/terms',
+                'privacy' => 'https://currencylayer.com/privacy',
+                'timestamp' => time(),
+                'source' => $defaultCurrency,
+                'quotes' => $quotes,
+            ]),
         ]);
         $client = new Client($this->config);
         $collection = $client->getAll();
         $this->assertCount(count($expected), $collection);
-        $collection->each(function($currency) use ($expected){
+        $collection->each(function ($currency) use ($expected) {
             $this->assertInstanceOf(QuoteDto::class, $currency);
             $this->assertEquals($expected[$currency->currency_iso], $currency->exchange_rate);
         });
     }
 
-    public function testSuccessResponseGetAllExisting(){
+    public function testSuccessResponseGetAllExisting()
+    {
         $defaultCurrency = $this->config['default_currency'];
         $currencies = Currency::factory()->count(5)->create();
         $expected = $currencies->pluck('exchange_rate', 'iso')->toArray();
         $quotes = [];
-        foreach($expected as $currencyIso => $exchangeRate){
+        foreach ($expected as $currencyIso => $exchangeRate) {
             $expected[$currencyIso] = $this->faker->randomFloat(6, 0, 10000);
             $quotes[$defaultCurrency.$currencyIso] = $expected[$currencyIso];
         }
         Http::fake([
             $this->config['host_url'].'live*' => Http::response([
-                "success" => true,
-                "terms" => "https://currencylayer.com/terms",
-                "privacy" => "https://currencylayer.com/privacy",
-                "timestamp" => time(),
-                "source" => $defaultCurrency,
-                "quotes" => $quotes
-            ])
+                'success' => true,
+                'terms' => 'https://currencylayer.com/terms',
+                'privacy' => 'https://currencylayer.com/privacy',
+                'timestamp' => time(),
+                'source' => $defaultCurrency,
+                'quotes' => $quotes,
+            ]),
         ]);
         $client = new Client($this->config);
         $collection = $client->getAllExisting();
         $this->assertCount(5, $collection);
-        $collection->each(function($currency) use ($expected){
+        $collection->each(function ($currency) use ($expected) {
             $this->assertInstanceOf(QuoteDto::class, $currency);
             $this->assertEquals($expected[$currency->currency_iso], $currency->exchange_rate);
         });
     }
-
 }

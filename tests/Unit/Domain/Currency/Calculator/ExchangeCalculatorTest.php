@@ -19,10 +19,10 @@ class ExchangeCalculatorTest extends TestCase
     {
         //TODO: Check for better dependency injection
         $currencyExchangeCalculator = new ExchangeCalculator([
-                ExchangePipe::class,
-                SurchargePipe::class,
-                DiscountPipe::class,
-            ],
+            ExchangePipe::class,
+            SurchargePipe::class,
+            DiscountPipe::class,
+        ],
             $this->app->make(Pipeline::class)
         );
         $currency = $input['currency']();

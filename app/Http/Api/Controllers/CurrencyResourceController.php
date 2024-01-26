@@ -9,7 +9,6 @@ use Illuminate\Routing\Controller;
 
 class CurrencyResourceController extends Controller
 {
-
     public function index(): AnonymousResourceCollection
     {
         return CurrencyResource::collection(Currency::all());

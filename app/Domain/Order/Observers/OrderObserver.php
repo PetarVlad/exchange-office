@@ -10,7 +10,7 @@ class OrderObserver
 {
     public function created(Order $order): void
     {
-        if(in_array($order->currency->iso, config('notifications.order.currency_iso'))){
+        if (in_array($order->currency->iso, config('notifications.order.currency_iso'))) {
             Mail::to(config('notifications.recipient'))->queue(new OrderCreated($order));
         }
     }

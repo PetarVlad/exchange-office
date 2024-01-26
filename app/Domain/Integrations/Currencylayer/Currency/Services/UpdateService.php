@@ -35,11 +35,11 @@ class UpdateService implements UpdateServiceInterface
             });
         } catch (ClientException $exception) {
             throw new UpdateServiceException(
-                'Client error: ' . $exception->getMessage(),
+                'Client error: '.$exception->getMessage(),
                 $exception->getCode(),
                 $exception->getPrevious()
             );
-        } catch(\Exception $exception){
+        } catch (\Exception $exception) {
             throw new UpdateServiceException(
                 $exception->getMessage(),
                 $exception->getCode(),
