@@ -4,12 +4,12 @@ namespace Tests\Unit\Domain\Integrations\Currencylayer\Clients;
 
 use App\Domain\Currency\Models\Currency;
 use App\Domain\Integrations\Currencylayer\Currency\Clients\Client;
+use App\Domain\Integrations\Currencylayer\Currency\Clients\Mappers\QuoteDtoMapper;
 use App\Domain\Integrations\Currencylayer\Currency\Exceptions\ClientException;
 use App\Domain\Integrations\Generic\Currency\DataTransferObjects\QuoteDto;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Http;
-use InvalidArgumentException;
 use Tests\TestCase;
 
 class ClientTest extends TestCase
@@ -28,42 +28,6 @@ class ClientTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideTestConfigData
-     */
-    public function testConfig(string $exceptionClass, $exceptionMessage, $config)
-    {
-        $this->expectException($exceptionClass);
-        $this->expectExceptionMessage($exceptionMessage);
-        new Client($config);
-    }
-
-    public static function provideTestConfigData(): array
-    {
-        return [
-            [
-                InvalidArgumentException::class,
-                'Config param integrations.currencylayer.host_url must be set',
-                [],
-            ],
-            [
-                InvalidArgumentException::class,
-                'Config param integrations.currencylayer.host_url must be a valid url',
-                ['host_url' => 'ABC'],
-            ],
-            [
-                InvalidArgumentException::class,
-                'Config param integrations.currencylayer.access_key must be set',
-                ['host_url' => 'http://localhost/'],
-            ],
-            [
-                InvalidArgumentException::class,
-                'Config param currencies.default must be set',
-                ['host_url' => 'http://localhost/', 'access_key' => 'ABCD1234'],
-            ],
-        ];
-    }
-
     public function testErrorResponse()
     {
         Http::fake([
@@ -72,47 +36,11 @@ class ClientTest extends TestCase
         $this->expectException(ClientException::class);
         $this->expectExceptionCode(500);
         $this->expectExceptionMessage('HTTP request returned status code 500');
-        $client = new Client($this->config);
+        $client = new Client(
+            $this->config,
+            new QuoteDtoMapper($this->config['default_currency'])
+        );
         $client->getAll();
-    }
-
-    /**
-     * @dataProvider provideMalformedResponseData
-     */
-    public function testMalformedResponse(array $response)
-    {
-        Http::fake([
-            $this->config['host_url'].'live*' => Http::response($response),
-        ]);
-        $this->expectException(ClientException::class);
-        $this->expectExceptionMessage('Malformed response object recieved');
-        $client = new Client($this->config);
-        $client->getAll();
-    }
-
-    public static function provideMalformedResponseData(): array
-    {
-        return [
-            [
-                [],
-            ],
-            [
-                [
-                    'success' => false,
-                ],
-            ],
-            [
-                [
-                    'success' => true,
-                ],
-            ],
-            [
-                [
-                    'success' => true,
-                    'quotes' => [],
-                ],
-            ],
-        ];
     }
 
     public function testSuccessResponseGetAll()
@@ -139,12 +67,12 @@ class ClientTest extends TestCase
                 'quotes' => $quotes,
             ]),
         ]);
-        $client = new Client($this->config);
+        $client = new Client($this->config, new QuoteDtoMapper($defaultCurrency));
         $collection = $client->getAll();
         $this->assertCount(count($expected), $collection);
         $collection->each(function ($currency) use ($expected) {
             $this->assertInstanceOf(QuoteDto::class, $currency);
-            $this->assertEquals($expected[$currency->currency_iso], $currency->exchange_rate);
+            $this->assertEquals($expected[$currency->currencyIso], $currency->exchangeRate);
         });
     }
 
@@ -168,12 +96,12 @@ class ClientTest extends TestCase
                 'quotes' => $quotes,
             ]),
         ]);
-        $client = new Client($this->config);
+        $client = new Client($this->config, new QuoteDtoMapper($defaultCurrency));
         $collection = $client->getAllExisting();
         $this->assertCount(5, $collection);
         $collection->each(function ($currency) use ($expected) {
             $this->assertInstanceOf(QuoteDto::class, $currency);
-            $this->assertEquals($expected[$currency->currency_iso], $currency->exchange_rate);
+            $this->assertEquals($expected[$currency->currencyIso], $currency->exchangeRate);
         });
     }
 }

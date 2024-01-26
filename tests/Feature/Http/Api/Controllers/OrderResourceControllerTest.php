@@ -100,7 +100,7 @@ class OrderResourceControllerTest extends TestCase
                 ],
                 [
                     'purchased_amount' => [
-                        'The purchased amount field format is invalid.',
+                        'The purchased amount must be a valid numeric value with up to two decimal places.',
                     ],
                 ],
             ],
@@ -112,7 +112,7 @@ class OrderResourceControllerTest extends TestCase
                 ],
                 [
                     'purchased_amount' => [
-                        'The purchased amount field format is invalid.',
+                        'The purchased amount must be a valid numeric value with up to two decimal places.',
                     ],
                 ],
             ],
