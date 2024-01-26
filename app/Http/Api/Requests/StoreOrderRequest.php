@@ -5,8 +5,8 @@ namespace App\Http\Api\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * @property $currency_iso
- * @property $purchased_amount
+ * @property string $currency_iso
+ * @property float $purchased_amount
  */
 class StoreOrderRequest extends FormRequest
 {

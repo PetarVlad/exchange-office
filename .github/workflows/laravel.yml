@@ -34,5 +34,7 @@ jobs:
         DB_DATABASE: database/database.sqlite
         NOTIFICATIONS_RECIPIENT: test@example.com
       run: vendor/bin/phpunit
+    - name: Run PHPStan
+      run: vendor/bin/phpstan
     - name: Run Pint
       run: vendor/bin/pint --test
