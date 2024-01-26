@@ -12,7 +12,7 @@ class OrderResourceControllerTest extends TestCase
 
     private string $endpointBase = '/api/orders';
 
-    public function testNoBodyRequest()
+    public function testStoreNoBodyRequest()
     {
         $response = $this->postJson($this->endpointBase);
         $response->assertInvalid([
@@ -24,7 +24,8 @@ class OrderResourceControllerTest extends TestCase
     /**
      * @dataProvider provideTestValidationsData
      */
-    public function testValidations($body, $errors)
+    //TODO: replace seed with custom factory data
+    public function testStoreValidations($body, $errors)
     {
         $this->seed();
         $response = $this->postJson($this->endpointBase, $body);
@@ -116,7 +117,7 @@ class OrderResourceControllerTest extends TestCase
         ];
     }
 
-    public function testSuccessfulOrderCreation()
+    public function testStoreOrderSuccessful()
     {
         $this->seed();
         $response = $this->postJson($this->endpointBase, [

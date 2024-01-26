@@ -15,7 +15,7 @@ class CreateOrderAction
     public function __invoke(OrderRequestDto $orderRequestDto): Order
     {
         $currency = Currency::where('iso', $orderRequestDto->currency_iso)->first();
-        $currencyExchangeResult = $this->exchangeCalculator($currency, $orderRequestDto->purchased_amount);
+        $currencyExchangeResult = ($this->exchangeCalculator)($currency, $orderRequestDto->purchased_amount);
 
         return Order::create([
             'currency_id' => $currency->id,
