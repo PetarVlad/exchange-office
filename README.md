@@ -1,66 +1,48 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## About Exchange Office
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Exchange Office is a sample application emulating a currency exchange website.
+It supports the following functionalities:
 
-## About Laravel
+- Adding surcharges and discounts to single currencies
+- Updating currencies by using external API (CurrencyLayer supported)
+- Creating orders and sending emails after their creation
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Installation steps
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+These instructions are meant for running this project in the context of a local developer environment and might not be suitable for a production environment.
+The steps below require a working Docker platform.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. After cloning the repository, create a configuration using the .env.example as a template. This can be achieved by using the following command `cp .env.example .env`
+2. After you have a copy of the configuration template, proceed to setting up the parameters inside of it:
+    1. Setup the database connection. If using this guides preferred way(through sail), fill the following parameters with the following values:
+    ```
+    DB_CONNECTION=mysql
+    DB_HOST=mysql
+    DB_PORT=3306
+    DB_DATABASE=exchange_office
+    DB_USERNAME=sail
+    DB_PASSWORD=password
+    ```
+    2. Setup the mailing system by filling the necessary `.env` parameters. For SMTP, fill out the `MAIL_*` parameters inside of the `.env` file. For more information visit: [Laravel Mail: Configuration](https://laravel.com/docs/10.x/mail#configuration)
+    3. To specify the recipient for created orders, please fill the `NOTIFICATIONS_RECIPIENT` parameter
+    4. To enable the CurrencyLayer API integration, place your access key as the value for the `CURRENCY_LAYER_ACCESS_KEY` parameter inside of your `.env` file
+3. Next, install the neccessary composer dependencies and set the application key by running the following command inside of the project's root directory:
+```
+docker run --rm \
+    -u "$(id -u):$(id -g)" \
+    -v "$(pwd):/var/www/html" \
+    -w /var/www/html \
+    laravelsail/php83-composer:latest \
+    sh -c "composer install --ignore-platform-reqs && \
+    php artisan key:generate"
+```
+4. After installing the dependencies, start up the docker services by running `./vendor/bin/sail up`. If you wish to run the services in the background run `./vendor/bin/sail up -d` instead.
+5. Run database migrations by running `./vendor/bin/sail artisan migrate`
+6. Seed the database by running the following command from inside of the project root directory: `./vendor/bin/sail artisan db:seed`
+7. Access the frontend at http://localhost
 
-## Learning Laravel
+## CurrencyLayer Integration
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+To update existing currency exchange rates run the command `./vendor/bin/sail artisan currency:update`
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+To setup daily updates to the exchange rates follow the setup guide at [Laravel Task Scheduling: Running the Scheduler](https://laravel.com/docs/10.x/scheduling#running-the-scheduler)
