@@ -11,7 +11,7 @@ class QuoteValidatorTest extends TestCase
     /**
      * @dataProvider provideTestQuoteValidator
      */
-    public function testQuoteValidator(string $exceptionClass, string $exceptionMessage, array $quote)
+    public function test_quote_validator(string $exceptionClass, string $exceptionMessage, array $quote)
     {
         $this->expectException($exceptionClass);
         $this->expectExceptionMessage($exceptionMessage);

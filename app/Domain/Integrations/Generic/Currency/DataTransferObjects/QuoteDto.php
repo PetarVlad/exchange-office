@@ -7,6 +7,5 @@ class QuoteDto
     public function __construct(
         public string $currencyIso,
         public float $exchangeRate
-    ) {
-    }
+    ) {}
 }

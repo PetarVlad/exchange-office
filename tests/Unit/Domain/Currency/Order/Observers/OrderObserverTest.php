@@ -12,7 +12,7 @@ use Tests\TestCase;
 
 class OrderObserverTest extends TestCase
 {
-    public function testAfterCreatedMailSent(): void
+    public function test_after_created_mail_sent(): void
     {
         Mail::fake();
 
@@ -24,7 +24,7 @@ class OrderObserverTest extends TestCase
         $order->currency = Currency::factory()->make([
             'iso' => 'XYZ',
         ]);
-        $orderObserver = new OrderObserver();
+        $orderObserver = new OrderObserver;
         $orderObserver->created($order);
         Mail::assertQueued(OrderCreated::class, function (OrderCreated $mail) use ($order) {
             return $mail->order->currency->iso === $order->currency->iso;
@@ -32,7 +32,7 @@ class OrderObserverTest extends TestCase
         Config::set('notifications.order.currency_iso', $defaultCurrency);
     }
 
-    public function testAfterCreatedMailNotSent(): void
+    public function test_after_created_mail_not_sent(): void
     {
         Mail::fake();
 
@@ -44,7 +44,7 @@ class OrderObserverTest extends TestCase
         $order->currency = Currency::factory()->make([
             'iso' => 'ABC',
         ]);
-        $orderObserver = new OrderObserver();
+        $orderObserver = new OrderObserver;
         $orderObserver->created($order);
         Mail::assertNotQueued(OrderCreated::class);
         Config::set('notifications.order.currency_iso', $defaultCurrency);

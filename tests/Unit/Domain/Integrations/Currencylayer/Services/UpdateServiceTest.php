@@ -16,7 +16,7 @@ class UpdateServiceTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    public function testClientException()
+    public function test_client_exception()
     {
         $this->mock(ClientInterface::class)->shouldReceive('getAllExisting')->andThrow(new ClientException('Test exception'));
         $updateService = app(UpdateService::class);
@@ -25,7 +25,7 @@ class UpdateServiceTest extends TestCase
         $updateService->updateAll();
     }
 
-    public function testUpdateServiceException()
+    public function test_update_service_exception()
     {
         $this->mock(ClientInterface::class)->shouldReceive('getAllExisting')->andThrow(new UpdateServiceException('Test exception'));
         $updateService = app(UpdateService::class);
@@ -34,7 +34,7 @@ class UpdateServiceTest extends TestCase
         $updateService->updateAll();
     }
 
-    public function testUpdate(): void
+    public function test_update(): void
     {
         /** @var Currency[] $currencies */
         $currencies = Currency::factory()->count(5)->create();

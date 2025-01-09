@@ -9,9 +9,7 @@ use Illuminate\Support\Collection;
 
 class QuoteDtoMapper implements QuoteDtoMapperInterface
 {
-    public function __construct(private readonly string $defaultCurrency)
-    {
-    }
+    public function __construct(private readonly string $defaultCurrency) {}
 
     public function mapToCollection(array $quotes): Collection
     {

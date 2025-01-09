@@ -13,7 +13,7 @@ class OrderResourceControllerTest extends TestCase
 
     private string $endpointBase = '/api/orders';
 
-    public function testStoreNoBodyRequest()
+    public function test_store_no_body_request()
     {
         $response = $this->postJson($this->endpointBase);
         $response->assertInvalid([
@@ -25,7 +25,7 @@ class OrderResourceControllerTest extends TestCase
     /**
      * @dataProvider provideTestValidationsData
      */
-    public function testStoreValidations($body, $errors)
+    public function test_store_validations($body, $errors)
     {
         Currency::factory()->create([
             'iso' => 'XYZ',
@@ -38,7 +38,7 @@ class OrderResourceControllerTest extends TestCase
     public static function provideTestValidationsData(): array
     {
         return [
-            //Case 1: Currency iso parameter is not a string
+            // Case 1: Currency iso parameter is not a string
             [
                 [
                     'currency_iso' => 123,
@@ -48,7 +48,7 @@ class OrderResourceControllerTest extends TestCase
                     'currency_iso' => 'The currency iso field must only contain letters.',
                 ],
             ],
-            //Case 2: Currency iso parameter is not 3 characters
+            // Case 2: Currency iso parameter is not 3 characters
             [
                 [
                     'currency_iso' => 'ABCD',
@@ -58,7 +58,7 @@ class OrderResourceControllerTest extends TestCase
                     'currency_iso' => 'The currency iso field must be 3 characters.',
                 ],
             ],
-            //Case 3: Currency does not exist
+            // Case 3: Currency does not exist
             [
                 [
                     'currency_iso' => 'ABC',
@@ -68,7 +68,7 @@ class OrderResourceControllerTest extends TestCase
                     'currency_iso' => 'The selected currency iso is invalid.',
                 ],
             ],
-            //Case 4: Purchased amount is not a numeric
+            // Case 4: Purchased amount is not a numeric
             [
                 [
                     'currency_iso' => 'XYZ',
@@ -80,7 +80,7 @@ class OrderResourceControllerTest extends TestCase
                     ],
                 ],
             ],
-            //Case 5: Purchased amount is less than 0
+            // Case 5: Purchased amount is less than 0
             [
                 [
                     'currency_iso' => 'XYZ',
@@ -92,7 +92,7 @@ class OrderResourceControllerTest extends TestCase
                     ],
                 ],
             ],
-            //Case 6: Purchased amount has more than 6 whole digits
+            // Case 6: Purchased amount has more than 6 whole digits
             [
                 [
                     'currency_iso' => 'XYZ',
@@ -104,7 +104,7 @@ class OrderResourceControllerTest extends TestCase
                     ],
                 ],
             ],
-            //Case 7: Purchased amount has more than 2 decimals
+            // Case 7: Purchased amount has more than 2 decimals
             [
                 [
                     'currency_iso' => 'XYZ',
@@ -119,7 +119,7 @@ class OrderResourceControllerTest extends TestCase
         ];
     }
 
-    public function testStoreOrderSuccessful()
+    public function test_store_order_successful()
     {
         Currency::factory()->create([
             'iso' => 'XYZ',

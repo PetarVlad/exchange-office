@@ -11,7 +11,7 @@ class ResponseValidatorTest extends TestCase
     /**
      * @dataProvider provideMalformedResponseData
      */
-    public function testResponseValidator(array $response): void
+    public function test_response_validator(array $response): void
     {
         $this->expectException(BadResponseException::class);
         $this->expectExceptionMessage('Malformed response object recieved');

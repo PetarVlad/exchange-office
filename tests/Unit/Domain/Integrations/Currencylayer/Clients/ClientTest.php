@@ -18,7 +18,7 @@ class ClientTest extends TestCase
 
     private array $config;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->config = [
@@ -28,7 +28,7 @@ class ClientTest extends TestCase
         ];
     }
 
-    public function testErrorResponse()
+    public function test_error_response()
     {
         Http::fake([
             $this->config['host_url'].'live*' => Http::response(null, 500),
@@ -43,7 +43,7 @@ class ClientTest extends TestCase
         $client->getAll();
     }
 
-    public function testSuccessResponseGetAll()
+    public function test_success_response_get_all()
     {
         $defaultCurrency = $this->config['default_currency'];
         $expected = [
@@ -76,7 +76,7 @@ class ClientTest extends TestCase
         });
     }
 
-    public function testSuccessResponseGetAllExisting()
+    public function test_success_response_get_all_existing()
     {
         $defaultCurrency = $this->config['default_currency'];
         $currencies = Currency::factory()->count(5)->create();

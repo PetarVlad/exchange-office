@@ -15,7 +15,7 @@ class ExchangeCalculatorTest extends TestCase
     /**
      * @dataProvider provideTestCalculationsData
      */
-    public function testCalculations(array $input, array $expected)
+    public function test_calculations(array $input, array $expected)
     {
         $currencyExchangeCalculator = new ExchangeCalculator(
             [

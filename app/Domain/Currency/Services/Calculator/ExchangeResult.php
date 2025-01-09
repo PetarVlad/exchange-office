@@ -16,7 +16,5 @@ class ExchangeResult
         public float $discountPercentage = 0,
         public float $discountAmount = 0,
         public float $convertedAmount = 0
-    ) {
-
-    }
+    ) {}
 }

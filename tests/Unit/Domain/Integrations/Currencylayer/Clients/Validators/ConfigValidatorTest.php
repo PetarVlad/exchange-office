@@ -11,7 +11,7 @@ class ConfigValidatorTest extends TestCase
     /**
      * @dataProvider provideTestConfigValidatorData
      */
-    public function testConfigValidator(string $exceptionClass, $exceptionMessage, $config)
+    public function test_config_validator(string $exceptionClass, $exceptionMessage, $config)
     {
         $this->expectException($exceptionClass);
         $this->expectExceptionMessage($exceptionMessage);

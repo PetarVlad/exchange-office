@@ -12,9 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class UpdateService implements UpdateServiceInterface
 {
-    public function __construct(private readonly ClientInterface $client)
-    {
-    }
+    public function __construct(private readonly ClientInterface $client) {}
 
     /**
      * @throws UpdateServiceException

@@ -10,7 +10,7 @@ class CurrencyResourceControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testIndex()
+    public function test_index()
     {
         /** @var Currency[] $currencies */
         $currencies = Currency::factory()->count(3)->create();

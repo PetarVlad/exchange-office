@@ -9,9 +9,7 @@ use App\Models\Order;
 
 class CreateOrderAction
 {
-    public function __construct(public ExchangeCalculator $exchangeCalculator)
-    {
-    }
+    public function __construct(public ExchangeCalculator $exchangeCalculator) {}
 
     public function __invoke(OrderRequestDto $orderRequestDto): Order
     {
