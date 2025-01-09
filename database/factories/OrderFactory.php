@@ -1,10 +1,10 @@
 <?php
 
-namespace Database\Factories\Domain\Order\Models;
+namespace Database\Factories;
 
-use App\Domain\Currency\Models\Currency;
-use App\Domain\Order\Models\Order;
-use Database\Factories\Factory;
+use App\Models\Currency;
+use App\Models\Order;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class OrderFactory extends Factory
 {

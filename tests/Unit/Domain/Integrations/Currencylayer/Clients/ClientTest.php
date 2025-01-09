@@ -2,11 +2,11 @@
 
 namespace Tests\Unit\Domain\Integrations\Currencylayer\Clients;
 
-use App\Domain\Currency\Models\Currency;
 use App\Domain\Integrations\Currencylayer\Currency\Clients\Client;
 use App\Domain\Integrations\Currencylayer\Currency\Clients\Mappers\QuoteDtoMapper;
 use App\Domain\Integrations\Currencylayer\Currency\Exceptions\ClientException;
 use App\Domain\Integrations\Generic\Currency\DataTransferObjects\QuoteDto;
+use App\Models\Currency;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Http;

@@ -2,7 +2,7 @@
 
 namespace App\Http\Api\Resources;
 
-use App\Domain\Currency\Models\Currency;
+use App\Models\Currency;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 

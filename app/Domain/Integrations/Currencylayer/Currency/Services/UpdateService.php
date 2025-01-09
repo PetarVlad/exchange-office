@@ -2,12 +2,12 @@
 
 namespace App\Domain\Integrations\Currencylayer\Currency\Services;
 
-use App\Domain\Currency\Models\Currency;
 use App\Domain\Integrations\Currencylayer\Currency\Exceptions\ClientException;
 use App\Domain\Integrations\Currencylayer\Currency\Exceptions\UpdateServiceException;
 use App\Domain\Integrations\Generic\Currency\Clients\ClientInterface;
 use App\Domain\Integrations\Generic\Currency\DataTransferObjects\QuoteDto;
 use App\Domain\Integrations\Generic\Currency\Services\UpdateServiceInterface;
+use App\Models\Currency;
 use Illuminate\Support\Facades\DB;
 
 class UpdateService implements UpdateServiceInterface

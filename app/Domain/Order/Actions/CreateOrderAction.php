@@ -2,10 +2,10 @@
 
 namespace App\Domain\Order\Actions;
 
-use App\Domain\Currency\Models\Currency;
 use App\Domain\Currency\Services\Calculator\ExchangeCalculator;
 use App\Domain\Order\DataTransferObjects\OrderRequestDto;
-use App\Domain\Order\Models\Order;
+use App\Models\Currency;
+use App\Models\Order;
 
 class CreateOrderAction
 {

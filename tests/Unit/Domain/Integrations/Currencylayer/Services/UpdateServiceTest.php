@@ -2,12 +2,12 @@
 
 namespace Tests\Unit\Domain\Integrations\Currencylayer\Services;
 
-use App\Domain\Currency\Models\Currency;
 use App\Domain\Integrations\Currencylayer\Currency\Exceptions\ClientException;
 use App\Domain\Integrations\Currencylayer\Currency\Exceptions\UpdateServiceException;
 use App\Domain\Integrations\Currencylayer\Currency\Services\UpdateService;
 use App\Domain\Integrations\Generic\Currency\Clients\ClientInterface;
 use App\Domain\Integrations\Generic\Currency\DataTransferObjects\QuoteDto;
+use App\Models\Currency;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;

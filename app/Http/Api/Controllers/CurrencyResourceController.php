@@ -2,8 +2,8 @@
 
 namespace App\Http\Api\Controllers;
 
-use App\Domain\Currency\Models\Currency;
 use App\Http\Api\Resources\CurrencyResource;
+use App\Models\Currency;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Routing\Controller;
 

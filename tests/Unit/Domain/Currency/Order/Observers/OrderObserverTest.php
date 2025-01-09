@@ -2,10 +2,10 @@
 
 namespace Tests\Unit\Domain\Currency\Order\Observers;
 
-use App\Domain\Currency\Models\Currency;
 use App\Domain\Order\Mail\OrderCreated;
-use App\Domain\Order\Models\Order;
 use App\Domain\Order\Observers\OrderObserver;
+use App\Models\Currency;
+use App\Models\Order;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;

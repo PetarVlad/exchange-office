@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Api\Controllers;
 
-use App\Domain\Currency\Models\Currency;
+use App\Models\Currency;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;

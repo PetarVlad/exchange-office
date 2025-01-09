@@ -2,12 +2,12 @@
 
 namespace App\Domain\Integrations\Currencylayer\Currency\Clients;
 
-use App\Domain\Currency\Models\Currency;
 use App\Domain\Integrations\Currencylayer\Currency\Clients\Validators\ConfigValidator;
 use App\Domain\Integrations\Currencylayer\Currency\Clients\Validators\ResponseValidator;
 use App\Domain\Integrations\Currencylayer\Currency\Exceptions\ClientException;
 use App\Domain\Integrations\Generic\Currency\Clients\ClientInterface;
 use App\Domain\Integrations\Generic\Currency\Clients\Mappers\QuoteDtoMapperInterface;
+use App\Models\Currency;
 use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;

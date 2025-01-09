@@ -2,7 +2,7 @@
 
 namespace App\Domain\Currency\Services\Calculator;
 
-use App\Domain\Currency\Models\Currency;
+use App\Models\Currency;
 use Illuminate\Pipeline\Pipeline;
 
 class ExchangeCalculator

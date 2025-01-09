@@ -1,8 +1,8 @@
 <?php
 
-namespace Database\Factories\Domain\Currency\Models;
+namespace Database\Factories;
 
-use Database\Factories\Factory;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CurrencyFactory extends Factory
 {

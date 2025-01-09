@@ -2,11 +2,11 @@
 
 namespace Tests\Unit\Domain\Currency\Calculator;
 
-use App\Domain\Currency\Models\Currency;
 use App\Domain\Currency\Services\Calculator\ExchangeCalculator;
 use App\Domain\Currency\Services\Calculator\Pipes\DiscountPipe;
 use App\Domain\Currency\Services\Calculator\Pipes\ExchangePipe;
 use App\Domain\Currency\Services\Calculator\Pipes\SurchargePipe;
+use App\Models\Currency;
 use Illuminate\Pipeline\Pipeline;
 use Tests\TestCase;
 
