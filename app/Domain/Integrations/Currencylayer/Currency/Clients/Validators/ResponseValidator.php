@@ -16,7 +16,7 @@ class ResponseValidator implements ValidatorInterface
             || empty($data['quotes'])
             || $data['success'] !== true) {
             throw new BadResponseException(
-                $data['error']['info'] ?? 'Malformed response object recieved',
+                $data['error']['info'] ?? 'Malformed response object received',
                 $data['error']['code'] ?? 0
             );
         }
