@@ -12,6 +12,8 @@ use App\Domain\Integrations\Currencylayer\Currency\Services\UpdateService;
 use App\Domain\Integrations\Generic\Currency\Clients\ClientInterface;
 use App\Domain\Integrations\Generic\Currency\Clients\Mappers\QuoteDtoMapperInterface;
 use App\Domain\Integrations\Generic\Currency\Services\UpdateServiceInterface;
+use App\Domain\Order\Observers\OrderObserver;
+use App\Models\Order;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\ServiceProvider;
@@ -62,6 +64,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Order::observe(OrderObserver::class);
     }
 }

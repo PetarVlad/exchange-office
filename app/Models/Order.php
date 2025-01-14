@@ -33,6 +33,16 @@ class Order extends Model
         'discount_amount',
     ];
 
+    protected $casts = [
+        'purchased_amount' => 'float',
+        'exchange_rate' => 'float',
+        'paid_amount' => 'float',
+        'surcharge_percentage' => 'float',
+        'surcharge_amount' => 'float',
+        'discount_percentage' => 'float',
+        'discount_amount' => 'float',
+    ];
+
     public function currency(): BelongsTo
     {
         return $this->belongsTo(Currency::class);

@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('currencies', function (Blueprint $table) {
             $table->id();
             $table->string('iso', 3)->unique();
-            $table->unsignedFloat('exchange_rate', 14, 6)->default(0);
-            $table->unsignedFloat('surcharge_percentage')->default(0);
-            $table->unsignedFloat('discount_percentage')->default(0);
+            $table->decimal('exchange_rate', 14, 6)->default(0);
+            $table->decimal('surcharge_percentage')->default(0);
+            $table->decimal('discount_percentage')->default(0);
             $table->timestamps();
         });
     }

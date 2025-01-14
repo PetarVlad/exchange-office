@@ -15,4 +15,10 @@ use Illuminate\Database\Eloquent\Model;
 class Currency extends Model
 {
     use HasFactory;
+
+    protected $casts = [
+        'exchange_rate' => 'float',
+        'surcharge_percentage' => 'float',
+        'discount_percentage' => 'float',
+    ];
 }

@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('currency_id');
-            $table->unsignedFloat('purchased_amount')->default(0);
-            $table->unsignedFloat('exchange_rate', 14, 6)->default(0);
-            $table->unsignedFloat('paid_amount')->default(0);
-            $table->unsignedFloat('surcharge_percentage')->default(0);
-            $table->unsignedFloat('surcharge_amount')->default(0);
-            $table->unsignedFloat('discount_percentage')->default(0);
-            $table->unsignedFloat('discount_amount')->default(0);
+            $table->decimal('purchased_amount')->default(0);
+            $table->decimal('exchange_rate', 14, 6)->default(0);
+            $table->decimal('paid_amount')->default(0);
+            $table->decimal('surcharge_percentage')->default(0);
+            $table->decimal('surcharge_amount')->default(0);
+            $table->decimal('discount_percentage')->default(0);
+            $table->decimal('discount_amount')->default(0);
             $table->timestamps();
 
             $table->foreign('currency_id')->references('id')->on('currencies');
